@@ -181,7 +181,7 @@ function App() {
   //api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
   const getWeatherCurrentLoaction = async (lat, lon) => {
     const res = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=REACT_APP_OPEN_API_URL=https://api.openweathermap.org/data/2.5/weather?`
     );
     const data = await res.json();
 
