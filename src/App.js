@@ -177,7 +177,7 @@ function App() {
   // current weather data open API
   //api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
   const getWeatherCurrentLoaction = async (lat, lon) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=d71a1d66cb9bfd628753e61d23238724`;
     const response = await fetch(url);
     const data = await response.json();
 
