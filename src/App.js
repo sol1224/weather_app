@@ -182,7 +182,7 @@ function App() {
   const getWeatherCurrentLoaction = async (lat, lon) => {
     try {
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=d71a1d66cb9bfd628753e61d23238724`
         // `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPEN_API_KEY}&units=metric`
       );
       console.log("res!!!", res);
