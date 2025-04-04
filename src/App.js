@@ -3,15 +3,12 @@ import "./App.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBars,
   faDroplet,
   faLocationDot,
-  faPlus,
   faSmog,
   faTemperatureQuarter,
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
-import { faFaceSmile, faMoon } from "@fortawesome/free-regular-svg-icons";
 
 // 1. 현재 위치의 날씨가 UI와 함께 나와야 한다
 // 2. 사이트 입장시 현재 위치의 날씨가 보여야 한다.
@@ -180,10 +177,9 @@ function App() {
   // current weather data open API
   //api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
   const getWeatherCurrentLoaction = async (lat, lon) => {
-    const res = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=REACT_APP_OPEN_API_URL=https://api.openweathermap.org/data/2.5/weather?`
-    );
-    const data = await res.json();
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`;
+    const response = await fetch(url);
+    const data = await response.json();
 
     const transLatedCityName = translationName[data.name] || data.name;
 
