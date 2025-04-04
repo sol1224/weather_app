@@ -147,6 +147,7 @@ const weatherDescKo = {
 
 function App() {
   const OPEN_API_KEY = process.env.REACT_APP_OPEN_API_KEY;
+  const API_URL = process.env.REACT_APP_OPEN_API_URL;
   const [weather, setWeather] = useState("");
 
   // currentLocation value
@@ -182,7 +183,7 @@ function App() {
   const getWeatherCurrentLoaction = async (lat, lon) => {
     try {
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`
+        `${API_URL}lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`
         // `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPEN_API_KEY}&units=metric`
       );
       console.log("res!!!", res);
@@ -248,7 +249,7 @@ function App() {
 
   useEffect(() => {
     getCurruntLocation();
-  }, []);
+  }, [weather]);
 
   return (
     <div>
