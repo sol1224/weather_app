@@ -182,22 +182,21 @@ function App() {
   const getWeatherCurrentLoaction = async (lat, lon) => {
     try {
       const res = await axios.get(
-               `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`
-        // `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPEN_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`
       );
-      console.log("res!!!", res);
-      const transLatedCityName =
-        translationName[res.data.name] || res.data.name;
+      const data = await res.json();
 
-      const weatherId = res.data.weather[0].id;
+      const transLatedCityName = translationName[data.name] || data.name;
+
+      const weatherId = data.weather[0].id;
       const weatherKo = weatherDescKo[weatherId];
-      const temp = (res.data.main.temp - 273.15).toFixed(0);
-      const temp_max = (res.data.main.temp_max - 273.15).toFixed(0);
-      const temp_min = (res.data.main.temp_min - 273.15).toFixed(0);
-      const humidity = res.data.main.humidity;
-      const windSpeed = res.data.wind.speed;
-      const sunrise = res.data.sys.sunrise;
-      const sunset = res.data.sys.sunset;
+      const temp = (data.main.temp - 273.15).toFixed(0);
+      const temp_max = (data.main.temp_max - 273.15).toFixed(0);
+      const temp_min = (data.main.temp_min - 273.15).toFixed(0);
+      const humidity = data.main.humidity;
+      const windSpeed = data.wind.speed;
+      const sunrise = data.sys.sunrise;
+      const sunset = data.sys.sunset;
 
       const getImg = getWeatherImg(weatherId);
 
@@ -223,10 +222,6 @@ function App() {
     const currentDate = new Date();
 
     // 각 구성 요소를 가져오기
-    const year = currentDate.getFullYear().toString();
-    const yearPart = year.slice(2, 4);
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const day = currentDate.getDate();
     const hours = String(currentDate.getHours()).padStart(2, "0");
     const minutes = String(currentDate.getMinutes()).padStart(2, "0");
     const week = [
