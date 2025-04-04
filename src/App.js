@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBars,
   faDroplet,
   faLocationDot,
+  faPlus,
   faSmog,
   faTemperatureQuarter,
   faWind,
@@ -177,36 +180,42 @@ function App() {
   // current weather data open API
   //api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
   const getWeatherCurrentLoaction = async (lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`;
-    let res = await fetch(url);
-    let data = await res.json();
+    try {
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${OPEN_API_KEY}`
+        // `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPEN_API_KEY}&units=metric`
+      );
+      console.log("res!!!", res);
+      const transLatedCityName =
+        translationName[res.data.name] || res.data.name;
 
-    const transLatedCityName = translationName[data.name] || data.name;
+      const weatherId = res.data.weather[0].id;
+      const weatherKo = weatherDescKo[weatherId];
+      const temp = (res.data.main.temp - 273.15).toFixed(0);
+      const temp_max = (res.data.main.temp_max - 273.15).toFixed(0);
+      const temp_min = (res.data.main.temp_min - 273.15).toFixed(0);
+      const humidity = res.data.main.humidity;
+      const windSpeed = res.data.wind.speed;
+      const sunrise = res.data.sys.sunrise;
+      const sunset = res.data.sys.sunset;
 
-    const weatherId = data.weather[0].id;
-    const weatherKo = weatherDescKo[weatherId];
-    const temp = (data.main.temp - 273.15).toFixed(0);
-    const temp_max = (data.main.temp_max - 273.15).toFixed(0);
-    const temp_min = (data.main.temp_min - 273.15).toFixed(0);
-    const humidity = data.main.humidity;
-    const windSpeed = data.wind.speed;
-    const sunrise = data.sys.sunrise;
-    const sunset = data.sys.sunset;
+      const getImg = getWeatherImg(weatherId);
 
-    const getImg = getWeatherImg(weatherId);
-
-    setWeather({
-      decription: weatherKo,
-      name: transLatedCityName,
-      temp: temp,
-      temp_max: temp_max,
-      temp_min: temp_min,
-      humidity: humidity, //습도
-      windSpeed: windSpeed, //풍속
-      sunrise: sunrise, //일출
-      sunset: sunset, // 일몰
-      getImg: getImg,
-    });
+      setWeather({
+        decription: weatherKo,
+        name: transLatedCityName,
+        temp: temp,
+        temp_max: temp_max,
+        temp_min: temp_min,
+        humidity: humidity, //습도
+        windSpeed: windSpeed, //풍속
+        sunrise: sunrise, //일출
+        sunset: sunset, // 일몰
+        getImg: getImg,
+      });
+    } catch (error) {
+      error(error);
+    }
   };
 
   const getCurrentTime = () => {
